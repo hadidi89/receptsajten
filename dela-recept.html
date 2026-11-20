@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dela ditt recept – Receptlådan</title>
+  <meta name="description" content="Skicka in ditt eget recept till Receptlådan.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="index.html">Receptlådan</a>
+      <nav aria-label="Huvudmeny">
+        <ul class="menu" role="list">
+          <li><a href="recept.html">Recept</a></li>
+          <li><a href="om-sajten.html">Om sajten</a></li>
+          <li><a class="btn" href="dela-recept.html" aria-current="page">Dela recept</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap form-page">
+    <h1>Dela ditt recept</h1>
+    <p>Fyll i formuläret så berättar du hur man lagar din favoriträtt. Fält med * är obligatoriska.</p>
+
+    <form class="form" action="dela-recept.html" method="get">
+      <fieldset>
+        <legend>Om receptet</legend>
+        <div class="field">
+          <label for="namn">Receptets namn *</label>
+          <input id="namn" name="namn" type="text" required>
+        </div>
+        <div class="field">
+          <label for="kategori">Kategori</label>
+          <select id="kategori" name="kategori">
+            <option value="">Välj kategori</option>
+            <option>Frukost</option>
+            <option>Middag</option>
+            <option>Efterrätt</option>
+            <option>Fika</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="tid">Tid i minuter</label>
+            <input id="tid" name="tid" type="number" min="1" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="portioner">Antal portioner</label>
+            <input id="portioner" name="portioner" type="number" min="1" inputmode="numeric">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Svårighetsgrad</legend>
+        <div class="radios">
+          <label><input type="radio" name="svarighet" value="latt"> Lätt</label>
+          <label><input type="radio" name="svarighet" value="medel"> Medel</label>
+          <label><input type="radio" name="svarighet" value="svar"> Svår</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Receptet</legend>
+        <div class="field">
+          <label for="ingredienser">Ingredienser *</label>
+          <textarea id="ingredienser" name="ingredienser" rows="4" required></textarea>
+        </div>
+        <div class="field">
+          <label for="instruktioner">Gör så här *</label>
+          <textarea id="instruktioner" name="instruktioner" rows="4" required></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Om dig</legend>
+        <div class="field">
+          <label for="ditt-namn">Ditt namn</label>
+          <input id="ditt-namn" name="ditt-namn" type="text" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="epost">E-post *</label>
+          <input id="epost" name="epost" type="email" autocomplete="email"
+                 placeholder="anna@exempel.se" required aria-describedby="epost-fel">
+          <p class="error" id="epost-fel">Ange en giltig e-postadress</p>
+        </div>
+      </fieldset>
+
+      <div><button class="btn" type="submit">Skicka recept</button></div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <p class="logo">Receptlådan</p>
+          <p>Enkla vardagsrecept som alla kan laga.</p>
+        </div>
+        <nav aria-label="Sidfot">
+          <ul class="footer-links" role="list">
+            <li><a href="#">Om sajten</a></li>
+            <li><a href="#">Frukost</a></li>
+            <li><a href="#">Middag</a></li>
+            <li><a href="#">Efterrätt</a></li>
+            <li><a href="#">Fika</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="copyright">Bilder från picsum.photos · © 2026 Ditt namn</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,554 @@
+/* 
+   1. RESET
+   Källa: Josh Comeau, "A Modern CSS Reset" (förkortad)
+   https://www.joshwcomeau.com/css/custom-css-reset/
+   Egna tillägg: ul[class]/ol[class]-regeln och logical properties.*/
+
+/* sv: Gör att width/height inkluderar padding och border, så mått blir förutsägbara.
+   en: Makes width/height include padding and border, so sizes are predictable. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* sv: Tar bort webbläsarens standardmarginaler så att jag styr alla avstånd själv.
+   en: Removes the browser's default margins so I control all spacing myself. */
+* {
+  margin: 0;
+}
+
+/* sv: Luftigare radavstånd (1.5, utan enhet) ger bättre läsbarhet; antialiased
+       gör typsnittet mjukare på macOS.
+   en: More generous line spacing (1.5, unitless) improves readability; antialiased
+       smooths text rendering on macOS. */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* sv: Bilder blir block (tar bort glappet under dem) och blir aldrig bredare än sin behållare.
+   en: Images become block (removes the gap beneath them) and never exceed their container. */
+img {
+  display: block;
+  max-inline-size: 100%;
+  
+}
+
+/* sv: Formulärfält ärver sidans typsnitt i stället för webbläsarens lilla standardtext.
+   en: Form controls inherit the page font instead of the browser's small default text. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* sv: Tillåter att långa ord bryts så att de inte spräcker layouten.
+   en: Allows long words to wrap so they don't break the layout. */
+p,
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
+}
+
+/* sv: Tar bort punkter och indrag på listor med klass (menyer, kort) men inte på vanliga listor.
+   en: Removes bullets and indentation from lists with a class (menus, cards), but not plain lists. */
+ul[class],
+ol[class] {
+  list-style: none;
+  padding: 0;
+}
+
+/* ==========================================================
+   2. TOKENS – alla färger, typsnitt och avstånd bor här
+   ========================================================== */
+:root {
+  /* Färger (oklch: ljushet, chroma, nyans). Tema: blåbär och smör */
+  --c-bg: oklch(97.5% 0.012 280);
+  --c-surface: oklch(100% 0 0);
+  --c-ink: oklch(24% 0.06 280);
+  --c-muted: oklch(42% 0.04 280);
+  --c-brand: oklch(36% 0.15 285);
+  --c-on-brand: oklch(98% 0.01 280);
+  --c-accent: oklch(87% 0.16 95);
+  --c-link: oklch(42% 0.17 20);
+  --c-line: oklch(85% 0.02 280);
+  --c-scrim: oklch(24% 0.08 280 / 0.86);
+  --c-valid: oklch(42% 0.14 150);
+  --c-invalid: oklch(45% 0.2 25);
+
+  /* Typsnitt */
+  --font-body: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-head: Georgia, "Iowan Old Style", "Times New Roman", serif;
+
+  /* Flytande typskala (clamp: min, föredraget, max) */
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-2: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+  --step-3: clamp(2rem, 1.3rem + 3.2vw, 3.75rem);
+
+  /* Avstånd */
+  --space-xs: 0.5rem;
+  --space-s: clamp(0.75rem, 0.6rem + 0.6vw, 1rem);
+  --space-m: clamp(1rem, 0.8rem + 1vw, 1.75rem);
+  --space-l: clamp(2rem, 1.4rem + 3vw, 4rem);
+
+  --radius: 0.5rem;
+  --page-width: 70rem;
+}
+
+/* ==========================================================
+   3. BAS
+   ========================================================== */
+body {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--c-ink);
+  background: var(--c-bg);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-3);
+}
+
+h2 {
+  font-size: var(--step-2);
+}
+
+h3 {
+  font-size: var(--step-1);
+}
+
+p {
+  max-inline-size: 65ch;
+}
+
+main > * + *,
+section > * + * {
+  margin-block-start: var(--space-m);
+}
+
+a {
+  color: var(--c-link);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 0.15em;
+}
+
+:focus-visible {
+  outline: 0.1875rem solid var(--c-ink);
+  outline-offset: 0.25rem;
+}
+
+/* Sidans innehåll hålls inom en bredd, marginalerna är flytande */
+.wrap {
+  inline-size: min(100% - 2 * var(--space-m), var(--page-width));
+  margin-inline: auto;
+}
+
+main {
+  padding-block: var(--space-l);
+  
+}
+
+/* Knapp och knappliknande länk */
+.btn {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-m);
+  background: var(--c-brand);
+  color: var(--c-on-brand);
+  border: 0;
+  border-radius: var(--radius);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--c-muted);
+}
+
+/* ==========================================================
+   4. HEADER OCH FOOTER (flex: innehållet styr)
+   ========================================================== */
+.site-header,
+.site-footer {
+  background: var(--c-surface);
+  box-shadow: 0px 2px 8px rgb(152, 176, 250);
+}
+
+.site-header {
+  border-block-end: 0.125rem solid var(--c-line);
+}
+
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding-block: var(--space-s);
+}
+
+.logo {
+  font-family: var(--font-head);
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--c-brand);
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-m);
+}
+
+.menu a:not(.btn) {
+  color: var(--c-ink);
+}
+
+[aria-current="page"]:not(.btn) {
+  font-weight: 700;
+  text-decoration: underline 0.2em var(--c-accent);
+  text-underline-offset: 0.3em;
+}
+
+.btn[aria-current="page"] {
+  outline: 0.1875rem solid var(--c-accent);
+  outline-offset: 0.125rem;
+}
+
+.site-footer {
+  border-block-start: 0.125rem solid var(--c-line);
+  padding-block: var(--space-l) var(--space-m);
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-l);
+}
+
+.footer-links {
+  display: grid;
+  gap: var(--space-xs);
+}
+.copyright {
+  text-align: center;
+  max-inline-size: none;
+  margin-block-start: var(--space-l);
+  color: var(--c-muted);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================
+   5. STARTSIDAN
+   ========================================================== */
+/* Hero: bild och text delar samma grid-cell, så texten ligger ovanpå */
+.hero {
+  display: grid; 
+}
+.hero > * {
+  grid-area: 1 / 1;
+}
+.hero img {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 18rem;
+  object-fit: cover;
+  
+}
+.hero-text {
+  align-self: end;
+  padding: var(--space-m);
+  background: var(--c-scrim);
+  color: var(--c-on-brand);
+}
+
+/* Kategorier: flex-wrap, så de bryts när det inte får plats */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-block-start: var(--space-l);
+  margin-block-end: var(--space-l);
+}
+
+.tags li {
+  flex: 1 1 auto;    
+}
+
+.tags a {   
+  display: block;    
+  text-align: center;   
+  padding: 0.25rem var(--space-s);
+  background: var(--accent);
+  color: var(--c-ink);
+  border-radius: 100vmax;
+  border: 1px solid var(--c-ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+.tags a:hover {
+  background: var(--c-ink);
+  color: var(--c-on-brand);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
+  transition: transform 0.2s ease;
+
+}
+.tags a:hover,
+.tags a:focus-visible {
+  transform: translateY(-2px);
+  background: var(--c-ink);
+  color: var(--c-on-brand);     
+}   
+                    
+/* Kort: grid, antal kolumner räknas ut själv utan media queries */
+
+#nya-recept { 
+  text-align: center;
+  margin-block-end: var(--space-l);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-m);
+}
+.card {
+  background: var(--c-surface);
+  box-shadow: 0px 2px 8px rgb(152, 176, 250);
+  transform: translateY(10px);
+  overflow: hidden;
+
+  &:hover{
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
+  }
+}
+.card img {
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;    
+  object-fit: cover;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: var(--space-s);
+}
+.card-body a {
+  font-family: var(--font-head);
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.card-body p {
+  color: var(--c-muted);
+}
+
+/* ==========================================================
+   6. RECEPTSIDAN
+   ========================================================== */
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-l);
+  align-items: start;
+  margin-bottom: 50px;
+}
+.recipe-img {
+  box-shadow: 0px 2px 8px rgb(72, 72, 72);
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.wrap .two-col .title {
+  height: 100%;
+  padding: 100px 0px;
+  box-shadow: 0px 2px 8px rgb(152, 176, 250);
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  p {
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.facts div {
+  flex: 1 1 7rem;
+  padding: var(--space-s);
+  background: var(--c-surface);
+  border: 0.0625rem solid var(--c-line);
+  border-radius: var(--radius);
+  margin: 10px;
+}
+.facts dt {
+  text-align: center;
+  color: var(--c-muted);
+  font-size: 0.875rem;
+}
+.facts dd {
+  text-align: center;
+  font-weight: 700;
+  font-size: var(--step-1);
+}
+
+.ingredients {
+  display: grid;
+  gap: var(--space-xs);
+}
+.ingredients label {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+.ingredients input {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  accent-color: var(--c-brand);
+}
+.ingredients label:hover {
+  background: var(--c-surface);
+}
+
+/* Kryssad ingrediens stryks över */
+.ingredients li:has(:checked) {
+  text-decoration: line-through;
+  color: var(--c-muted);
+}
+
+.steps {
+  padding-inline-start: 1.5rem;
+  display: grid;
+  gap: var(--space-s);
+}
+.steps li::marker {
+  font-weight: 700;
+  color: var(--c-brand);
+}
+
+figure img {
+  inline-size: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+figcaption {
+  margin-block-start: var(--space-xs);
+  color: var(--c-muted);
+}
+
+/* ==========================================================
+   7. FORMULÄR – en kolumn på alla skärmar
+   ========================================================== */
+
+.form-page > * {
+  inline-size: min(100%, 40rem);
+  margin-inline: auto;
+}
+.form {
+  margin-inline: auto;
+  inline-size: min(100%, 40rem);
+  display: grid;
+  gap: var(--space-m);
+}
+.form fieldset {
+  display: grid;
+  gap: var(--space-s);
+  padding: var(--space-m);
+  border: 0.0625rem solid var(--c-line);
+  border-radius: var(--radius);
+  background: var(--c-surface);
+  min-inline-size: 0;
+}
+.form legend {
+  padding-inline: var(--space-xs);
+  font-weight: 700;
+}
+.field {
+  display: grid;
+  gap: 0.25rem;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+}
+.row .field {
+  flex: 1 1 10rem;
+}
+.field label {
+  font-weight: 600;
+}
+.field input,
+.field select,
+.field textarea {
+  inline-size: 100%;
+  padding: var(--space-xs);
+  color: var(--c-ink);
+  background: var(--c-bg);
+  border: 0.125rem solid var(--c-muted);
+  border-radius: var(--radius);
+}
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: var(--c-brand);
+}
+.field input:user-valid,
+.field textarea:user-valid {
+  border-color: var(--c-valid);
+}
+.field input:user-invalid,
+.field textarea:user-invalid {
+  border-color: var(--c-invalid);
+}
+.error {
+  display: none;
+  color: var(--c-invalid);
+  font-weight: 600;
+}
+.field:has(:user-invalid) .error {
+  display: block;
+}
+.radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-m);
+}
+.radios label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.radios input {
+  accent-color: var(--c-brand);
+}
