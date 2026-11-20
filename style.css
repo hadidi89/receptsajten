@@ -4,10 +4,12 @@
    https://www.joshwcomeau.com/css/custom-css-reset/
    Egna tillägg: ul[class]/ol[class]-regeln och logical properties.*/
    /* 
+git/* 
    1. RESET
    Källa: Josh Comeau, "A Modern CSS Reset" (förkortad)
    https://www.joshwcomeau.com/css/custom-css-reset/
    Egna tillägg: ul[class]/ol[class]-regeln och logical properties.*/
+   /* 
 
 /* sv: Gör att width/height inkluderar padding och border, så mått blir förutsägbara.
    en: Makes width/height include padding and border, so sizes are predictable. */
