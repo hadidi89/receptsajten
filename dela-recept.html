@@ -30,7 +30,8 @@
         <legend>Om receptet</legend>
         <div class="field">
           <label for="namn">Receptets namn *</label>
-          <input id="namn" name="namn" type="text" required>
+          <input id="namn" name="namn" type="text" required placeholder="T.ex. Chokladbollar" aria-describedby="namn-fel">
+          <p class="error" id="namn-fel">Ange ett namn på receptet</p>
         </div>
         <div class="field">
           <label for="kategori">Kategori</label>
@@ -45,11 +46,11 @@
         <div class="row">
           <div class="field">
             <label for="tid">Tid i minuter</label>
-            <input id="tid" name="tid" type="number" min="1" inputmode="numeric">
+            <input id="tid" name="tid" type="number" min="1" placeholder="T.ex. 30">
           </div>
           <div class="field">
             <label for="portioner">Antal portioner</label>
-            <input id="portioner" name="portioner" type="number" min="1" inputmode="numeric">
+            <input id="portioner" name="portioner" type="number" min="1" placeholder="T.ex. 4">
           </div>
         </div>
       </fieldset>
@@ -67,11 +68,11 @@
         <legend>Receptet</legend>
         <div class="field">
           <label for="ingredienser">Ingredienser *</label>
-          <textarea id="ingredienser" name="ingredienser" rows="4" required></textarea>
+          <textarea id="ingredienser" name="ingredienser" rows="4" required placeholder="T.ex. 200 g vetemjöl, 100 g smör..."></textarea>
         </div>
         <div class="field">
           <label for="instruktioner">Gör så här *</label>
-          <textarea id="instruktioner" name="instruktioner" rows="4" required></textarea>
+          <textarea id="instruktioner" name="instruktioner" rows="4" required placeholder="T.ex. Mixa ingredienserna och forma bollar..."></textarea>
         </div>
       </fieldset>
 
@@ -79,12 +80,12 @@
         <legend>Om dig</legend>
         <div class="field">
           <label for="ditt-namn">Ditt namn</label>
-          <input id="ditt-namn" name="ditt-namn" type="text" autocomplete="name">
+          <input id="ditt-namn" name="ditt-namn" type="text" autocomplete="name" placeholder="T.ex. Adam Hadidi">
         </div>
         <div class="field">
           <label for="epost">E-post *</label>
           <input id="epost" name="epost" type="email" autocomplete="email"
-                 placeholder="anna@exempel.se" required aria-describedby="epost-fel">
+                 placeholder="adam@exempel.se" required aria-describedby="epost-fel">
           <p class="error" id="epost-fel">Ange en giltig e-postadress</p>
         </div>
       </fieldset>
